@@ -1,0 +1,88 @@
+﻿@model UniversityCourseResultManagementApp.Models.Department
+@using UniversityCourseResultManagementApp.Models
+
+@{
+    ViewBag.Title = "Show Course Statics";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    List<Department> departmentList = ViewBag.departments;
+
+}
+
+<div class="container">
+    <div class="row" style="padding:3%;">
+        <div class="col-lg-2">
+        </div>
+        <div class="col-lg-8">
+            <div class="form-group">
+                <label for="departmentId" class="col-sm-2 control-label">Department</label>
+                <div class="col-sm-10">
+                    <select class="form-control" id="departmentId" name="departmentId">
+                        <option value="">Select...</option>
+                        @foreach (var department in departmentList)
+                        {
+                            <option value="@department.Id">@department.Name</option>
+                        }
+                    </select>
+
+
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-2">
+        </div>
+    </div>
+
+    <div class="row" style="padding:3%;">
+        <div class="col-lg-1">
+        </div>
+        <div class="col-lg-10">
+            <table class="table table-bordered table-hover table-responsive table-striped">
+                <thead>
+                    <tr>
+                        <th>Code</th>
+                        <th>Name/Title</th>
+                        <th>Semester</th>
+                        <th>Assigned To</th>
+                    </tr>
+                </thead>
+
+                <tbody id="tablebody"></tbody>
+
+            </table>
+        </div>
+        <div class="col-lg-1">
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/jquery-2.2.3.js"></script>
+    
+    <script>
+
+          $(document).ready(function () {
+
+              $("#departmentId").change(function () {
+                var departmentId = $("#departmentId").val();
+                var json = { departmentId: departmentId };
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("GetCourseView", "CourseView")',
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(json),
+                    success: function (data) {
+                        // table.clear();
+                        // $("#CourseTable").clear();
+                        // $("#CourseTable").show();
+                        $("#tablebody").empty();
+                        $.each(data, function (key, value) {
+
+                            $("#tablebody").append('<tr><td>' + value.CourseCode + '</td><td>' + value.CourseName + '</td><td>' + value.SemesterName + '</td><td>' + value.TeacherName + '</td></tr>');
+                        });
+                    }
+                });
+            });
+
+
+        });
+
+    </script>

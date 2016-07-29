@@ -1,0 +1,47 @@
+﻿
+@{
+    ViewBag.Title = "UnAllocateClass";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container" style="margin-top:60px;">
+    <form class="form-horizontal" method="post" id="unAllocateClassForm">
+        <fieldset>
+            <legend>Unallocate All Classes</legend>
+            <div class="jumbotron">
+                <div class="row">
+                    <div class="col-sm-4"></div>
+                    <div class="col-sm-4">
+                        <input type="submit" id="unAllocateClassButton" value="Unallocate Classes" class="btn btn-danger" />
+                    </div>
+                    <div class="col-sm-4"></div>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+    @if (ViewBag.Message != null)
+    {
+        <div class="form-group" style="padding-left:17px;">
+            <div class="col-sm-offset-2 col-sm-10 bg-danger" style="padding-top:5px; border-radius:10px;width:410px;">
+                <p id="messageBox" class=" text-danger" style="font-size:medium;">
+                    @ViewBag.Message
+                </p>
+            </div>
+        </div>
+    }
+</div>
+@section scripts{
+    <script>
+        $(function () {
+            $("#unAllocateClassButton").click(function () {
+                var r = confirm("Are You Sure To Unallocate All Classrooms Info??");
+                if (r == true) {
+                    $("#unAllocateClassForm").submit();
+                } else {
+
+                    return false;
+                }
+            });
+        });
+    </script>
+}
+

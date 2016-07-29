@@ -1,0 +1,118 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - University Management System</title>
+   @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @RenderSection("myStyle", required: false)
+
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("C# Code Novice", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                @* <ul class="nav navbar-nav">
+              <li>@Html.ActionLink("Home", "Index", "Home")</li>
+              <li>@Html.ActionLink("Department", "Save", "Department")</li>
+             <li>@Html.ActionLink("Course", "Save", "Course")</li>
+               <li>@Html.ActionLink("Teacher", "Save", "Teacher")</li>
+            <li>@Html.ActionLink("Student", "Register","Student")</li>
+             </ul>*@
+
+                <ul class="nav navbar-nav" style="font-weight:bold;">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Department<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("Save Department", "Save", "Department")</li>
+                            <li role="separator" class="divider"></li>
+                            <li>@Html.ActionLink("View All Departments", "GetAllDepartments", "Department")</li>
+                            <li role="separator" class="divider"></li>
+                        </ul>
+                    </li>
+
+
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Course<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("Save Course", "Save", "Course")</li>
+                            <li role="separator" class="divider"></li>
+                            <li>@Html.ActionLink("View Course Statics", "CourseView", "CourseView")</li>
+                            <li role="separator" class="divider"></li>
+                            <li>@Html.ActionLink("Unassign All Courses", "UnassignCourse", "Course")</li>
+                            <li role="separator" class="divider"></li>
+                        </ul>
+                    </li>
+
+
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Teacher<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("Save Teacher", "Save", "Teacher")</li>
+                            <li role="separator" class="divider"></li>
+                            <li>@Html.ActionLink("Course Assign to Teacher", "CourseAssign", "Course")</li>
+                            <li role="separator" class="divider"></li>
+                        </ul>
+                    </li>
+
+
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Student<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("Register Student", "Register", "Student")</li>
+                            <li role="separator" class="divider"></li>
+                            <li>@Html.ActionLink("Enroll In a Course", "EnrollCourse", "CourseEnroll")</li>
+                            <li role="separator" class="divider"></li>
+                            <li>@Html.ActionLink("Save Student Result", "SaveResult", "Result")</li>
+                            <li role="separator" class="divider"></li>
+                            <li>@Html.ActionLink("View Result", "ViewResult", "Result")</li>
+                            <li role="separator" class="divider"></li>
+                        </ul>
+                    </li>
+
+                    <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Classroom<b class="caret"></b></a>
+            <ul class="dropdown-menu">
+                <li>@Html.ActionLink("Allocate Classrooms", "AllocateClassRoom", "AllocateClassRoom")</li>
+                <li role="separator" class="divider"></li>
+                <li>@Html.ActionLink("Class Schedule and Room Info", "GetClassScheduleInfo", "AllocateClassRoom")</li>
+                <li role="separator" class="divider"></li>
+                <li>@Html.ActionLink("Unallocate All Classrooms", "UnAllocateClass", "AllocateClassRoom")</li>
+                <li role="separator" class="divider"></li>
+            </ul>
+        </li>
+                    @*<li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Unassaign/Unallocate<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("Unassign All Courses", "", "AllocateClassRoom")</li>
+                            <li>@Html.ActionLink("Unallocate All Classrooms", "UnAllocateClass", "AllocateClassRoom")</li>
+                        </ul>
+                    </li>*@
+
+                </ul>
+               @* @Html.Partial("_LoginPartial")*@
+                </div>
+            </div>
+        </div>
+        <div class="container body-content">
+            @RenderBody()
+            <hr />
+            <footer>
+                <p>&copy; @DateTime.Now.Year - C# Code Novice </p>
+            </footer>
+        </div>
+
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+        @RenderSection("scripts", required: false)
+    </body>
+    </html>

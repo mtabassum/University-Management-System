@@ -1,0 +1,37 @@
+﻿@using UniversityCourseResultManagementApp.Models
+@{
+    ViewBag.Title = "View All Departments";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    List<Department> departments = ViewBag.departments;
+}
+
+@*<h1 style="font-size:48px;color:#3146e8;margin-top:100px;text-align:center">View All Departments</h1>*@
+
+    <legend style="font-size:30px;color:#0077b3;margin-top:100px;text-align:center">View All Departments</legend>
+
+
+    <div class="container">
+        <table class="table table-bordered active">
+            <thead class="alert-info">
+                <tr style="font-size:24px">
+
+                    <th>Code</th>
+                    <th>Name</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in departments)
+            {
+                    <tr>
+                        <td>@item.Code</td>
+                        <td>@item.Name</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+
+
+

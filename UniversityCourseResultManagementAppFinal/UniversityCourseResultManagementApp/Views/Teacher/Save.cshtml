@@ -1,0 +1,109 @@
+﻿
+@model UniversityCourseResultManagementApp.Models.Teacher
+@{
+    ViewBag.Title = "Save Teacher";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section myStyle{
+    <style>
+        label.error {
+        }
+
+        div {
+            margin-top: 10px;
+        }
+        /*#SaveTeacherForm {
+            margin-top: 50px;
+            margin-left: 250px;
+        }*/
+        input[type=submit] {
+            margin-top: 10px;
+        }
+
+        .field-validation-error {
+            color: Red;
+        }
+    </style>
+}
+<div class="container" style="margin-top:50px">
+    <div class="row">
+        @using (Html.BeginForm("Save", "Teacher", FormMethod.Post, new { @id = "SaveTeacherForm" }))
+        {
+            <fieldset>
+                <legend style="color: #0077b3; font-size:28px;">Save Teacher</legend>
+                <div class="form-group">
+                    @Html.LabelFor(x => x.Name, new { @class = "col-sm-2 control-label" })
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(x => x.Name, new { @class = "form-control", @PlaceHolder = "Enter Teacher Name" })
+                        @Html.ValidationMessageFor(x => x.Name)
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(l => l.Address, new { @class = "col-sm-2 control-label" })
+                    <div class="col-sm-10">
+                        @Html.TextAreaFor(m => m.Address, new { @class = "form-control", @PlaceHolder = "Enter Teacher Address" })
+                        @Html.ValidationMessageFor(x => x.Address)
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(l => l.Email, new { @class = "col-sm-2 control-label" })
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @PlaceHolder = "Enter Teacher Email" })
+                        @Html.ValidationMessageFor(x => x.Email)
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(l => l.ContactNo, new { @class = "col-sm-2 control-label" })
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(m => m.ContactNo, new { @class = "form-control", @PlaceHolder = "Enter Teacher Contact Number" })
+                        @Html.ValidationMessageFor(x => x.ContactNo)
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(l => l.DesignationId, new { @class = "col-sm-2 control-label" })
+                    <div class="col-sm-10">
+                        @Html.DropDownListFor(l => l.DesignationId, new SelectList(ViewBag.Designations, "Id", "Name"), "--Select Designation--", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(x => x.DesignationId)
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(l => l.DepartmentId, new { @class = "col-sm-2 control-label" })
+                    <div class="col-sm-10">
+                        @Html.DropDownListFor(l => l.DepartmentId, new SelectList(ViewBag.Departments, "Id", "Name"), "--Select Department--", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(x => x.DepartmentId)
+                    </div>
+                </div>
+                <br /><br />
+                <div class="form-group">
+                    @Html.LabelFor(l => l.CreditToBeTaken, new { @class = "col-sm-2 control-label" })
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(m => m.CreditToBeTaken, new { @class = "form-control", @PlaceHolder = "Enter Teacher Credit To Be Taken" })
+                        @Html.ValidationMessageFor(x => x.CreditToBeTaken)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-3">
+                        <input type="submit" style="width:70px;height:35px;font-size:15px;" class="btn btn-sm btn-primary" value="Save" />
+                    </div>
+
+                </div>
+
+            </fieldset>
+        }
+        @if (ViewBag.Message != null)
+        {
+            <div class="form-group" style="padding-left:17px;">
+                <div class="col-sm-offset-2 col-sm-10 bg-danger" style="padding-top:5px; border-radius:10px;width:410px;">
+                    <p id="messageBox" class=" text-danger" style="font-size:medium;">
+                        @ViewBag.Message
+                    </p>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+@section scripts{
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+}

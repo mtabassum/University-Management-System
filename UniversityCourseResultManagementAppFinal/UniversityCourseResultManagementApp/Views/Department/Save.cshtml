@@ -1,0 +1,165 @@
+﻿@using System.Web.UI.WebControls
+@model UniversityCourseResultManagementApp.Models.Department
+@{
+    ViewBag.Title = "Save Department";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title style="color:#0077b3">Save Department</title>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+
+    <style>
+        label.error {
+            color: red;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container" style="margin-top: 0px;">
+        <div style="margin-left: 100px; margin-right: 100px; align-content: center; border-radius: 50px;">
+       
+            <h3 style="text-align: center; color: #0077b3; padding: 5px; border-radius: 15px 15px 0px 0px;">Save Department</h3>
+            <form class="form-horizontal" id="DeptSaveForm" method="post" style="align-content: center; padding-left: 16em;">
+                <div class="form-group">
+                    <label for="Code" class="col-sm-2 control-label">Code</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="Code" name="Code">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="Name" class="col-sm-2 control-label">Name</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="Name" name="Name">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </div>
+                @if (@ViewBag.Message != null)
+                {
+                    <p class="text-danger" style="font-size:medium;">@ViewBag.Message</p>
+                }
+            </form>
+            <h2 style="height: 100px;"></h2>
+        </div>
+    </div>
+
+@section scripts{
+
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script>
+        $(function() {
+            $("#DeptSaveForm")
+                .validate(
+                {
+                    rules: {
+                        Name: "required",
+                        Code: {
+                            required: true,
+                            minlength: 2,
+                            maxlength: 7
+
+                        }
+                    },
+                    messages: {
+                        Name: "Please Enter a Department Name",
+                        Code: {
+                            required: "Please Enter a Department Code",
+                            minlength: "Code must be at least two Characters long",
+                            maxlength: "Code length can not more than 7"
+                        }
+                    }
+                });
+        });
+    </script>
+}
+</body>
+</html>
+
+
+
+
+
+@*@using System.Web.UI.WebControls
+@model UniversityCourseResultManagementApp.Models.Department
+@{
+    ViewBag.Title = "Save Department";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+@section myStyle{
+    <style>
+        .field-validation-error {
+            color: Red;
+        }
+
+        /*div {
+            margin-top: 10px;
+        }*/
+
+        input[type=submit] {
+            margin-top: 10px;
+        }
+    </style>
+}
+
+
+    @using (Html.BeginForm())
+    {
+
+        <legend style="font-size: 20px; color: #0077b3">Save Department</legend>
+    @*<h3 style="font-size:30px; color:#0077b3">Save Department</h3>*@
+        @*<div class="form-group">
+            @Html.LabelFor(x => x.Code, new {@class = "col-sm-2 control-label"})
+            <div class="col-sm-10">
+                @Html.TextBoxFor(x => x.Code, new {@class = "form-control", @PlaceHolder = "Enter Department Code"})
+                @Html.ValidationMessageFor(x => x.Code)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(x => x.Name, new {@class = "col-sm-2 control-label"})
+            <div class="col-sm-10">
+                @Html.TextBoxFor(x => x.Name, new {@class = "form-control", @PlaceHolder = "Enter Department Name"})
+                @Html.ValidationMessageFor(x => x.Name)
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <input type="submit" value="Save" class="btn btn-sm btn-primary" />
+            </div>
+        </div>
+
+
+        if (ViewBag.Message != null)
+        {
+            <div class="form-group" style="padding-left: 17px;">
+                <div class="col-sm-offset-2 col-sm-10 bg-danger" style="padding-top: 5px; border-radius: 10px; width: 410px;">
+                    <p id="messageBox" class=" text-danger" style="font-size: medium;">
+                        @ViewBag.Message
+                    </p>
+                </div>
+            </div>
+
+        }
+    }
+
+@section scripts{
+    <script src="~/Scripts/jquery-2.2.3.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+ 
+}*@

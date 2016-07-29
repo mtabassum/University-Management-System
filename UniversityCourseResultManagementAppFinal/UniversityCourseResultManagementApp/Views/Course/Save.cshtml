@@ -1,0 +1,200 @@
+﻿@*@using UniversityCourseResultManagementApp.Models
+
+@{
+    Layout = null;
+    List<Department> departmentList = ViewBag.Departments;
+    List<Semester> semesterList = ViewBag.Semesters;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Save</title>
+</head>
+<body>
+    <div>
+        <form id="myForm" method="post">
+            @if (ViewBag.Courses != null)
+            {
+                <div>
+                    @ViewBag.Courses
+                </div>
+            }
+            <h2 align="center">Save Course</h2>
+            <table align="center">
+                <tbody>
+                <tr>
+                    <td>Code</td>
+                    <td><input type="text" id="Code" name="Code"/></td>
+                </tr>
+                <tr>
+                    <td>Name</td>
+                    <td><input type="text" id="Name" name="Name"/></td>
+                </tr>
+                <tr>
+                    <td>Credit</td>
+                    <td><input type="number" id="Credit" name="Credit"/></td>
+                </tr>
+                <tr>
+                    <td>Description</td>
+                    <td><input type="text" id="Description" name="Description"/></td>
+                </tr>
+                    <tr>
+                        <td>Department</td>
+                        <td>
+                            <select id="DepartmentId" name="DepartmentId">
+                                @foreach (var department in departmentList)
+                                {
+                                    <option value="@department.Id">@department.Name</option>
+                                }
+                            </select>
+                        </td>
+                    </tr>
+                <tr>
+                    <td>Semester</td>
+                    <td>
+                        <select id="SemesterId" name="SemesterId">
+                            @foreach (var semester in semesterList)
+                            {
+                                <option value="@semester.Id">@semester.Name</option>
+                            }
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><input type="submit" value="Save"/></td>
+                </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+</body>
+</html>*@
+
+
+
+
+@using System.Web.UI.WebControls
+@model UniversityCourseResultManagementApp.Models.Course
+@{
+    ViewBag.Title = "Save Course";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+<meta name="viewport" content="width=device-width" />
+<link href="~/Content/bootstrap.css" rel="stylesheet" />
+@section myStyle{
+    <style>
+        .field-validation-error {
+            color: Red;
+        }
+
+        /*div {
+            margin-top: 10px;
+        }*/
+
+        input[type=submit] {
+            margin-top: 10px;
+        }
+    </style>
+}
+
+        @using (Html.BeginForm())
+        {
+
+            <fieldset>
+                <legend style="color: #0077b3; font-size:28px;">Save Course</legend>
+                <div class="form-group">
+                    @Html.LabelFor(x => x.Code, new { @class = "col-sm-2 control-label", id = "txtCode", onblur = "codeUninqueFuncion()" })
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(x => x.Code, new { @class = "form-control", @PlaceHolder = "Enter Course Code" })
+                        @Html.ValidationMessageFor(x => x.Code)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(x => x.Name, new { @class = "col-sm-2 control-label" })
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(x => x.Name, new { @class = "form-control", @PlaceHolder = "Enter Course Name" })
+                        @Html.ValidationMessageFor(x => x.Name)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(x => x.Credit, new { @class = "col-sm-2 control-label" })
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(x => x.Credit, new { @class = "form-control", @PlaceHolder = "Enter Course Credit" })
+                        @Html.ValidationMessageFor(x => x.Credit)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(x => x.Description, new { @class = "col-sm-2 control-label" })
+                    <div class="col-sm-10">
+                        @Html.TextAreaFor(x => x.Description, new { @class = "form-control", @PlaceHolder = "Enter Course Descriptions" })
+                        @Html.ValidationMessageFor(x => x.Description)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(x => x.DepartmentId, "Department", new { @class = "col-sm-2 control-label" })
+                    <div class="col-sm-10">
+                        @Html.DropDownListFor(x => x.DepartmentId, new SelectList(ViewBag.Departments, "Id", "Name"), "--Select Department--", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(x => x.DepartmentId)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(x => x.SemesterId, "Semester", new { @class = "col-sm-2 control-label" })
+                    <div class="col-sm-10">
+                        @Html.DropDownListFor(x => x.SemesterId, new SelectList(ViewBag.Semesters, "Id", "Name"), "--Select Semester--", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(x => x.SemesterId)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <input type="submit" value="Save" class="btn btn-primary"/>
+                    </div>
+
+                </div>
+                @if (ViewBag.Message != null)
+                {
+                <div class="form-group" style="padding-left:17px;">
+                    <div class="col-sm-offset-2 col-sm-10 bg-danger" style="padding-top:5px; border-radius:10px;width:410px;">
+                        <p id="messageBox" class="text-danger" style="font-size:medium;">
+                            @ViewBag.Message
+                        </p>
+                    </div>
+                </div>
+                }
+            </fieldset>
+        }
+
+
+                @section scripts{
+                    <script src="~/Scripts/jquery-2.2.3.js"></script>
+                    <script src="~/Scripts/jquery.validate.min.js"></script>
+                    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+                    <script>
+
+                            function codeUninqueFuncion() {
+                                code = $("#txtCode").val();
+                                var json = { code: code };
+                                    $.ajax({
+                                        type: "POST",
+                                        url: '/Course/CheckCodeIsExists',
+                                        //url: '@Url.Action("CheckCodeIsExists", "Course")',
+                                        contentType: "application/json; charset=utf-8",
+                                        data: JSON.stringify(json),
+                                        success: function (data) {
+                                            alert(data);
+                                        }
+                                    });
+
+                                }
+                        </script>
+                }

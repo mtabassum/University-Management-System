@@ -1,0 +1,221 @@
+﻿@using UniversityCourseResultManagementApp.Models
+@{
+    ViewBag.Title = "ViewStudentResult";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    List<Student> listOfStudentRegNo = ViewBag.listOfStudentRegNo;
+}
+@section myStyle{
+    <style>
+        #DeptName, #Email, #Name, #resultName, #resultDept, #resultEmail {
+            background-color: #FFFFFF;
+        }
+    </style>
+}
+<div class="container" style="margin-top:80px;padding:0px 30px;">
+    <form class="form-horizontal" method="post" id="enrollCourse">
+        <div class="row">
+            <div class="col-lg-2"></div>
+            <div class="col-lg-8">
+                <div class="form-group">
+                    <label for="Id" class="col-sm-2 control-label">Student Reg: No</label>
+                    <div class="col-sm-10">
+                        <select class="form-control" id="StudentId" name="StudentId">
+                            <option value="">---Select Reg: No---</option>
+                            @foreach (var item in listOfStudentRegNo)
+                            {
+                                <option value="@item.Id">@item.RegNo</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="Name" class="col-sm-2 control-label">Name</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="Name" name="Name" readonly />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="Email" class="col-sm-2 control-label">Email</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="Email" name="Email" readonly />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="DeptName" class="col-sm-2 control-label">Department</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="DeptName" name="DeptName" readonly />
+                    </div>
+                </div>
+                <div class="form-group" style="display:none">
+                    <label for="RegNo" class="col-sm-2 control-label">RegNo</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="RegNo" name="RegNo" readonly />
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-2"></div>
+        </div>
+    </form>
+    <div class="row">
+        <div class="col-lg-offset-6">
+            <input type="submit" style="margin-left:360px;" value="Make PDF" class="btn btn-primary" onclick="myPrint();" /><br /><br /><br />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-2"></div>
+        <div class="col-lg-8">
+            <table class="table table-bordered table-hover table-responsive">
+                <thead>
+                    <tr>
+                        <th>Course Code</th>
+                        <th>Name</th>
+                        <th>Grade</th>
+                    </tr>
+                </thead>
+                <tbody id="resultTbody"></tbody>
+            </table>
+        </div>
+        <div class="col-lg-2"></div>
+    </div>
+    <div class="space30"></div>
+    <div id="printDiv">
+        <div id="hiddentDiv" style="border:2px solid black;margin-left:100px;margin-right:100px; width:800px;height:1000px;display:none;">
+       
+            <h4 class="alert-danger" style="color:#0077b3;text-align:center;font-size:36px">Student Result Sheet</h4><hr style="width:70%; line-height:30px;margin-top:-40px;margin-bottom:20px;" />
+            <div class="row" style="padding-right:20px;">
+                <div class="col-lg-3"></div>
+                <div class="col-lg-3">
+                    <table class="table table-bordered table-hover table-responsive" style="margin-right:20px; font-size:24px;font-style:italic; padding-left:30px; width:100%;">
+
+                        <tr>
+                            <td style="width:40%"><label style="font:30px bold black;">Name  </label></td>
+                            <td style=" width:60%"><p id="printName" style="color:#005580;"></p></td>
+
+                        </tr>
+                        <tr>
+                            <td style="width:40%"><label style="font:30px bold black;">Reg. No.  </label></td>
+                            <td style=" width:60%"><p id="printRegNo" style="color:#005580;"></p></td>
+
+                        </tr>
+
+                        <tr>
+                            <td style="width:40%"><label style="font:30px bold black;">Email  </label></td>
+                            <td style=" width:60%"><p style="color:#005580;" id="resultEmail"></p></td>
+                        </tr>
+                        <tr>
+                            <td style="width:40%"><label style="font:30px bold black;">Department  </label></td>
+                            <td style=" width:60%"><p style="color:#005580;" id="resultDept"></p></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="col-lg-6"></div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-3"></div>
+                <div class="col-lg-6">
+                    <table border="1" class="table table-bordered table-hover table-responsive" style="width:100%;font-size:28px;">
+                        <thead>
+                            <tr>
+                                <th>Course Code</th>
+                                <th>Name</th>
+                                <th>Grade</th>
+                            </tr>
+                        </thead>
+                        <tbody id="resultPDFTbody"></tbody>
+                    </table>
+                </div>
+                <div class="col-lg-3"></div>
+            </div>
+        </div>
+    </div>
+
+</div>
+@section scripts{
+    <script>
+    $(function () {
+        $("#StudentId").change(function () {
+            $("#Name").hover(function () {
+                $("#Name").css('cursor', 'not-allowed').attr('title', 'This is a Readonly Field');
+            });
+            $("#Email").hover(function () {
+                $("#Email").css('cursor', 'not-allowed').attr('title', 'This is a Readonly Field');
+            });
+            $("#DeptName").hover(function () {
+                $("#DeptName").css('cursor', 'not-allowed').attr('title', 'This is a Readonly Field');
+            });
+            var StudentId = $("#StudentId").val();
+            $("#RegNo").val("");
+            $("#Name").val("");
+            $("#Email").val("");
+            $("#DeptName").val("");
+            $("#resultTbody").empty();
+            var json = { StudentId: StudentId };
+            $.ajax({
+                type: "POST",
+                
+                url: '@Url.Action("ViewStudentDetails", "Result")',
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(json),
+                    success: function (data) {
+                        $("#Name").val(data.Name);
+                        $("#Email").val(data.Email);
+                        $("#RegNo").val(data.RegNo);
+                        $("#DeptName").val(data.DepartmentName);
+
+                        $("#resultName").val(data.Name);
+                        $("#resultEmail").val(data.Email);
+                        $("#resultDept").val(data.DepartmentName);
+
+                    }
+                });
+                $.ajax({
+                    type: "POST",
+                  
+                  url: '@Url.Action("ViewStudentResultByID", "Result")',
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(json),
+                    success: function (data) {
+                        $.each(data, function (key, value) {
+
+                            $("#resultTbody").append('<tr><td>' + value.CourseCode + '</td><td>' + value.CourseName + '</td><td>' + value.Grade + '</td></tr>');
+                            $("#resultPDFTbody").append('<tr><td>' + value.CourseCode + '</td><td>' + value.CourseName + '</td><td>' + value.Grade + '</td></tr>');
+                        });
+                    }
+                });
+
+            });
+        });
+    </script>
+    <script language="javascript">
+
+
+    function myPrint() {
+        var Name = document.getElementById("Name").value;
+        document.getElementById("printName").innerHTML = ': '+Name;
+
+        var Email = document.getElementById("Email").value;
+        document.getElementById("resultEmail").innerHTML = ': ' + Email;
+
+        var DeptName = document.getElementById("DeptName").value;
+        document.getElementById("resultDept").innerHTML = ': ' + DeptName;
+
+        var RegNo = document.getElementById("RegNo").value;
+        document.getElementById("printRegNo").innerHTML = ': ' + RegNo;
+
+        var myPrintContent = document.getElementById('printDiv');
+        var myPrintWindow = window.open('left=300,top=100,width=400,height=400');
+        myPrintWindow.document.write(myPrintContent.innerHTML);
+        myPrintWindow.document.getElementById('hiddentDiv').style.display = 'block';
+        myPrintWindow.document.close();
+        myPrintWindow.focus();
+        myPrintWindow.print();
+        myPrintWindow.close();
+        location.reload();
+        return false;
+    }
+    </script>
+
+}
+
